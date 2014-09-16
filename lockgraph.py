@@ -1,20 +1,3 @@
-class Graph:
-    locks = []
-    def __init__(self):
-        pass
-
-    def addLock(self, lock):
-        self.locks.append(lock)
-        print 'adding lock '
-
-    def __str__(self):
-
-        data = "digraph locks {"
-        for l in self.locks:
-            data += "%s -> %s \r\n" % (l["waiting_pid"], l["other_pid"])
-        data += "}"
-        return data
-
 sql="""
 SELECT
     waiting.locktype           AS waiting_locktype,
@@ -57,11 +40,13 @@ AND
     other.granted
 """
 
+import os
+from textwrap import wrap
+
 import psycopg2
 import psycopg2.extras
 from graphviz import Digraph
-import os
-from textwrap import wrap
+
 
 path = os.getenv("PATH")
 path += ';c:/program files (x86)/graphviz2.38/bin'
